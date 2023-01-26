@@ -16,12 +16,32 @@ export default function HomePage() {
     });
     setEntries(updatedEntries);
   }
-
+  const handleEdit = (id, edit) => {
+    setEntries(
+      entries.map((entry) => {
+        if (entry.id === id) return { ...entry, edit: !edit };
+        return entry;
+      })
+    );
+  };
+  const handleChange = (id, text) => {
+    setEntries(
+      entries.map((entry) => {
+        if (entry.id === id) return { ...entry, text };
+        return entry;
+      })
+    );
+  };
   console.log(entries);
   return (
     <>
       <Header />
-      <Card onDelete={handleDelete} entries={entries} />
+      <Card
+        onDelete={handleDelete}
+        entries={entries}
+        onEdit={handleEdit}
+        onChanche={handleChange}
+      />
       <Footer onNewEntry={handleEntries} />
     </>
   );

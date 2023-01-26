@@ -5,7 +5,9 @@ export default function Footer({ onNewEntry }) {
     onNewEntry({
       name: e.target.elements.name.value,
       text: e.target.elements.text.value,
+      edit: false,
     });
+    e.target.reset();
   };
   return (
     <StyledForm onSubmit={submit}>
@@ -13,7 +15,7 @@ export default function Footer({ onNewEntry }) {
         type="text"
         id="name"
         name="name"
-        placeholder=".....your thoughts"
+        placeholder="your name"
         required
       />
 
@@ -21,7 +23,7 @@ export default function Footer({ onNewEntry }) {
         type="text"
         id="text"
         name="text"
-        placeholder="your name"
+        placeholder=".....your thoughts"
         required
       />
 
@@ -45,12 +47,11 @@ const StyledForm = styled.form`
   padding-bottom: 1.5rem;
   input {
     font-size: 20px;
-    background: var(--secondary-color)
-    
+    background: var(--secondary-color);
   }
   input::placeholder {
     color: var(--primary-color);
-    opacity:0.8;
+    opacity: 0.8;
     transition: opacity 1s;
   }
   button {
@@ -61,11 +62,10 @@ const StyledForm = styled.form`
     border: o solid;
     cursor: pointer;
     border: none;
-    
+
     &:hover {
-      
       color: var(--fourth-color);
       font-size: 65px;
-     
     }
+  }
 `;

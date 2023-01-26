@@ -1,20 +1,39 @@
 import styled from "styled-components";
 import { useState } from "react";
-export default function Card({ entries, onDelete }) {
-  const [edit, setEdit] = useState(false);
-  function handleEdit() {
-    return setEdit(true);
-  }
+export default function Card({ entries, onDelete, onEdit, onChange }) {
+  const changeEdit = (e) => {
+    e.preventDefault();
+    onChange(id, e.target.value);
+  };
+  const saveEdit = (e) => {
+    e.preventDefault();
+    onEdit(id, edit);
+  };
+
   return (
     <StyledList>
       {entries.map((entry) => (
         <li key={entry.id} id={entry.id}>
-          <h2>{entry.text}</h2>
-          <p>{entry.name}</p>
+          <h2>{entry.name}</h2>
           <div>
             <button onClick={() => onDelete(entry.id)}>--</button>
-            <button onClick={() => handleEdit()}>...</button>
+            <button onClick={() => onEdit(entry.id, entry.edit)}>...</button>
           </div>
+          {entry.edit === true ? (
+            <form onSubmit={saveEdit}>
+              <textarea
+                id="edit"
+                type="text"
+                name="edit"
+                value={entry.text}
+                onChange={changeEdit}
+                defaultValue={entry.text}
+              ></textarea>
+              <button>+</button>
+            </form>
+          ) : (
+            <p>{entry.text}</p>
+          )}
         </li>
       ))}
       <li>
@@ -77,10 +96,10 @@ const StyledList = styled.ul`
     color: var(--third-color);
   }
   li p {
-    padding-left: 1.4rem;
+    padding-left: 1.1rem;
   }
   li h2 {
-    padding-right: 40px;
+    padding-right: 30px;
   }
   li {
     word-break: break-all;
